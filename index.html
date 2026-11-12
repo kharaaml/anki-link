@@ -19,16 +19,20 @@
   <b id="deck">Opening Anki…</b>
   <a id="go" href="anki://">Open in Anki</a>
   <p>If Anki didn't open, tap the button.</p>
+  <a id="alt" href="#" style="background:none;color:var(--muted);font-weight:400;text-decoration:underline;padding:4px" hidden>Deck didn't open? Show its cards instead</a>
 </div>
 <script>
   // ?deck=Full::Deck::Name  → phone: AnkiMobile search for that deck; Mac: the local "Open Anki Deck" helper.
   var deck = new URLSearchParams(location.search).get("deck") || "";
   var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   var url;
-  if (ios) url = deck && deck !== "MCATalyst MCAT" ? "anki://x-callback-url/search?query=" + encodeURIComponent('"deck:' + deck + '"') : "anki://";
+  // iPhone: AnkiMobile 25.07+ "study" link opens the deck itself; the search link (Browse) stays as a fallback button.
+  var search = "anki://x-callback-url/search?query=" + encodeURIComponent('"deck:' + deck + '"');
+  if (ios) url = deck && deck !== "MCATalyst MCAT" ? "anki://x-callback-url/study?deck=" + encodeURIComponent(deck) : "anki://";
   else url = "ankideck://open?deck=" + encodeURIComponent(deck || "MCATalyst MCAT");
   document.getElementById("deck").textContent = deck ? deck.split("::").pop() : "Anki";
   document.getElementById("go").href = url;
+  if (ios && deck && deck !== "MCATalyst MCAT") { var alt = document.getElementById("alt"); alt.href = search; alt.hidden = false; }
   location.href = url;
 </script>
 </body>
