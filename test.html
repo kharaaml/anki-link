@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Anki link test</title>
+<style>body{margin:0;padding:24px;font:18px/1.4 system-ui,sans-serif;background:#f5f7f8;color:#14202a;display:grid;gap:14px}a{display:block;text-decoration:none;font-weight:700;background:#0a6b66;color:#fff;border-radius:14px;padding:16px}small{display:block;font-weight:400;opacity:.85;font-size:13px;word-break:break-all;margin-top:4px}p{margin:0;color:#5a6873;font-size:15px}</style></head>
+<body>
+<p>Tap each button. After each one, come back here. Which one opens the <b>Amino Acids</b> deck ready to study?</p>
+<script>
+var full="MCATalyst MCAT::5 Biochemistry::02 Proteins::1 Amino Acids";
+var tests=[
+ ["A · full name, fully encoded","anki://x-callback-url/study?deck="+encodeURIComponent(full)],
+ ["B · full name, only spaces encoded","anki://x-callback-url/study?deck="+full.replace(/ /g,"%20")],
+ ["C · last part only","anki://x-callback-url/study?deck="+encodeURIComponent("1 Amino Acids")],
+ ["D · top deck only","anki://x-callback-url/study?deck="+encodeURIComponent("MCATalyst MCAT")]
+];
+tests.forEach(function(t){var a=document.createElement("a");a.href=t[1];a.innerHTML=t[0]+"<small>"+t[1]+"</small>";document.body.appendChild(a);});
+</script>
+</body></html>
